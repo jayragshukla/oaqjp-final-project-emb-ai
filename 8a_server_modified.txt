@@ -1,23 +1,22 @@
-theia@theiadocker-mitaljayrag:/home/project/oaqjp-final-project-emb-ai$ pylint ./
-************* Module test_emotion_detection
-test_emotion_detection.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-test_emotion_detection.py:5:0: C0115: Missing class docstring (missing-class-docstring)
-test_emotion_detection.py:6:4: C0116: Missing function or method docstring (missing-function-docstring)
-test_emotion_detection.py:2:0: C0411: standard import "unittest" should be placed before first party import "EmotionDetection.emotion_detection.emotion_detector"  (wrong-import-order)
-************* Module server
-server.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-server.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
-server.py:11:7: C0121: Comparison 'result == None' should be 'result is None' (singleton-comparison)
-server.py:17:0: C0116: Missing function or method docstring (missing-function-docstring)
-************* Module EmotionDetection.emotion_detection
-EmotionDetection/emotion_detection.py:6:0: C0301: Line too long (108/100) (line-too-long)
-EmotionDetection/emotion_detection.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-EmotionDetection/emotion_detection.py:5:0: C0116: Missing function or method docstring (missing-function-docstring)
-EmotionDetection/emotion_detection.py:9:15: W3101: Missing timeout argument for method 'requests.post' can cause your program to hang indefinitely (missing-timeout)
-EmotionDetection/emotion_detection.py:2:0: C0411: standard import "json" should be placed before third party import "requests" (wrong-import-order)
-************* Module EmotionDetection
-EmotionDetection/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-EmotionDetection/__init__.py:1:0: C0103: Module name "EmotionDetection" doesn't conform to snake_case naming style (invalid-name)
+from flask import Flask, render_template, request
+from EmotionDetection.emotion_detection import emotion_detector
 
-------------------------------------------------------------------
-Your code has been rated at 6.34/10 (previous run: 2.93/10, +3.41)
+app = Flask("Emotion Detection")
+
+
+@app.route("/emotionDetector")
+def sent_analyzer():
+    text_to_analyze = request.args.get("textToAnalyze")
+    result = emotion_detector(text_to_analyze)
+    if result is None:
+        return "Invalid text! Please try again!"
+    return result
+
+
+@app.route("/")
+def render_index_page():
+    return render_template("index.html")
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

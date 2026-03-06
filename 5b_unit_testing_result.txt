@@ -1,0 +1,7 @@
+n3.11 test_emotion_detection.py ome/project/oaqjp-final-project-emb-ai$ python
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.596s
+
+OK
+theia@theiadocker-mitaljayrag:/home/project/oaqjp-final-project-emb-ai$ 

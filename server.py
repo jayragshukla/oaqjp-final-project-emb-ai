@@ -9,7 +9,7 @@ def sent_analyzer():
     text_to_analyze = request.args.get("textToAnalyze")
     result = emotion_detector(text_to_analyze)
     if result is None:
-        return "Invalid input! Try again."
+        return "Invalid text! Please try again!"
     return result
 
 
